@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agriculture management systemss</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f2f2f2;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 15px;
+      padding: 15px;
+    }
+
+    .box {
+      background-color: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .box h3 {
+      margin-top: 0;
+    }
+
+    .sensor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .sensor {
+      background-color: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .weather-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .weather-day {
+      text-align: center;
+    }
+
+    .pie-chart {
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+    }
+
+    iframe {
+      width: 100;
+      height: 200px;
+      border: none;
+    }
+
+    /* Login Form Styling */
+    #loginSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #loginBox {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+
+    #loginBox h2 {
+      text-align: center;
+    }
+
+    #loginBox label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    #loginBox input[type="text"],
+    #loginBox input[type="submit"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    #dashboard {
+      display: none;
+    }
+
+    button.logout {
+      float: right;
+      margin-top: -5px;
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Section -->
+<div id="loginSection">
+  <div id="loginBox">
+    <h2>Farm Login</h2>
+    <form onsubmit="return handleLogin(event)">
+      <label for="farmName">Farm Name:</label>
+      <input type="text" id="farmName" required>
+
+      <label for="farmId">Farm ID:</label>
+      <input type="text" id="farmId" required>
+
+      <label for="location">Location:</label>
+      <input type="text" id="location" required>
+
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <header>
+    Agriculture Management System
+    <button class="logout" onclick="logout()">Log Out</button>
+  </header>
+
+  <div class="container">
+    <!-- Farm Details -->
+    <div class="box" style="grid-column: span 1;">
+      <h3>Farm Details</h3>
+      <p><strong>Farm Name:</strong> <span id="displayFarmName"></span></p>
+      <p><strong>Farm ID:</strong> <span id="displayFarmId"></span></p>
+      <p><strong>Location:</strong> <span id="displayLocation"></span></p>
+      <p><strong>Land Area:</strong> 4.5 acres</p>
+      <p><strong>No. of Crops:</strong> 3</p>
+      <p><strong>Previous Yield:</strong> 28 tonnes</p>
+    </div>
+
+    <!-- Moisture and Water Consumption -->
+    <div class="box">
+      <h3>Moisture Detector</h3>
+      <img src="C:\Users\ADMIN\Documents\sindhu html\water.png" style="width:200px;height:200px"
+>
+      <p style="color: red;">Water Required</p>
+    </div>
+
+    <div class="box">
+      <h3>Water Consumed (Yesterday)</h3>
+      <p>27,910 litres</p>
+      <p style="font-size: 24px; font-weight: bold;">56%</p>
+      <img src="C:\Users\ADMIN\Documents\sindhu html\water irr.png" style="width:250px;height:200px">
+    </div>
+
+    <!-- Weather -->
+    <div class="box">
+      <h3>Weather</h3>
+      <div class="weather-box">
+        <div class="weather-day"><p><strong>thur</strong></p><p>29°C</p></div>
+        <div class="weather-day"><p><strong>Fri</strong></p><p>39°C</p></div>
+        <div class="weather-day"><p><strong>Sat</strong></p><p>39°C</p></div>
+        <div class="weather-day"><p><strong>Sun</strong></p><p>39°C</p></div>
+      </div>
+      <p>Humidity: 27% | Wind: 4.08 m/s | Rain Prob.: 0%</p>
+      <img src="C:\Users\ADMIN\Documents\sindhu html\sun1.pgn.jpg" style="width:200px;height:150px">
+    </div>
+
+    <!-- Sensor Dashboard -->
+    <div class="box" style="grid-column: span 2;">
+      <h3>Sensor Status</h3>
+      <div class="sensor-grid">
+        <div class="sensor" style="background:#f88;">Temperature<br>Sensor</div>
+        <div class="sensor" style="background:#ff0;">Waterflow<br>Sensor</div>
+        <div class="sensor" style="background:#ccf;">Moisture<br>Sensor</div>
+        <div class="sensor" style="background:#aaf;">Windspeed<br>Sensor</div>
+        <div class="sensor" style="background:#bfb;">Humidity<br>Sensor</div>
+        <div class="sensor" style="background:#fdd;">Smoke<br>Sensor</div>
+      </div>
+    </div>
+
+    <!-- Farm View -->
+    <div class="box">
+      <h3>Farm View</h3>
+      <img src="C:\Users\ADMIN\Documents\sindhu html\farm.png" />
+    </div>
+
+    <!-- Fire Alarm -->
+    <div class="box">
+      <h3>Fire Alarm</h3>
+      <img src="C:\Users\ADMIN\Documents\sindhu html\fire.png" />
+    </div>
+
+    <!-- Sensor Location Fire -->
+    <div class="box">
+      <h3>Fire Sensor Location</h3>
+      <iframe id="mapIframe" src=""></iframe>
+    </div>
+
+    <!-- Crop Yield -->
+    <div class="box">
+      <h3>Crop Yield</h3>
+      <img src="C:\Users\ADMIN\Downloads\Screenshot 2025-09-17 at 23-48-21 Online HTML _ CSS Editor.png" style="width:200px;height:200px;">
+      <p>Rice: 44.3% | Cotton: 28.4% | Groundnut: 27.3%</p>
+    </div>
+
+    <!-- Crop Recommendation -->
+    <div class="box">
+      <h3>Crop Recommendation</h3>
+      <ul>
+        <li>Rice</li>
+        <li>Sugarcane</li>
+        <li>Millet</li>
+        <li>Cotton</li>
+        <li>Groundnut</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function handleLogin(event) {
+    event.preventDefault();
+    const name = document.getElementById("farmName").value;
+    const id = document.getElementById("farmId").value;
+    const location = document.getElementById("location").value;
+
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+
+    document.getElementById("displayFarmName").textContent = name;
+    document.getElementById("displayFarmId").textContent = id;
+    document.getElementById("displayLocation").textContent = location;
+
+    document.getElementById("mapIframe").src =
+      "https://maps.google.com/maps?q=" +
+      encodeURIComponent(location) +
+      "&t=&z=10&ie=UTF8&iwloc=&output=embed";
+
+    return false;
+  }
+
+  function logout() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginSection").style.display = "flex";
+  }
+</script>
+
+</body>
+</html>
